@@ -23,12 +23,11 @@ environment {
             steps{
                 echo "----------- unit test started ----------"
                 sh 'mvn surefire-report:report'
-                 echo "----------- unit test Complted ----------"
+                 echo "----------- unit test Completed ----------"
             }
         }
-
         stage("Jar Publish") {
-        steps {
+            steps {
             script {
                     echo '<--------------- Jar Publish Started --------------->'
                      def server = Artifactory.newServer url:registry+"/artifactory" ,  credentialsId:"jfrog-cred"
@@ -72,6 +71,7 @@ environment {
             }
         }
     }
+}
 }
 }
 
