@@ -50,8 +50,7 @@ environment {
              }
         }   
     }
-
-    stage(" Docker Build ") {
+stage(" Docker Build ") {
       steps {
         script {
            echo '<--------------- Docker Build Started --------------->'
@@ -60,7 +59,21 @@ environment {
         }
       }
     }
+     stage (" Docker Publish "){
+        steps {
+            script {
+               echo '<--------------- Docker Publish Started --------------->'  
+                docker.withRegistry(registry, 'jfrog-cred'){
+                    app.push()
+                }    
+               echo '<--------------- Docker Publish Ended --------------->'  
+            }
+        }
+    }
+   }
 }
-}
+
+
+      
 
 
