@@ -20,14 +20,13 @@ environment {
                  echo "----------- build complted ----------"
             }
         }
-stage("test"){
+        stage("test"){
             steps{
                 echo "----------- unit test started ----------"
                 sh 'mvn surefire-report:report'
                  echo "----------- unit test Complted ----------"
             }
         }
-
         stage("Jar Publish") {
         steps {
             script {
@@ -52,6 +51,26 @@ stage("test"){
              }
         }   
     }
-}
-}
 
+    stage(" Docker Build ") {
+      steps {
+        script {
+           echo '<--------------- Docker Build Started --------------->'
+           app = docker.build(imageName+":"+version)
+           echo '<--------------- Docker Build Ends --------------->'
+        }
+      }
+    }
+     stage (" Docker Publish "){
+        steps {
+            script {
+               echo '<--------------- Docker Publish Started --------------->'  
+                docker.withRegistry(registry, 'jfrog_cred'){
+                    app.push()
+                }    
+               echo '<--------------- Docker Publish Ended --------------->'  
+            }
+        }
+    }  
+}
+}
