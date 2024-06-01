@@ -68,8 +68,7 @@ stage(" Docker Build ") {
                 }    
                echo '<--------------- Docker Publish Ended --------------->'  
             }
-        }
-    }
+        }   
    }
 }
 
